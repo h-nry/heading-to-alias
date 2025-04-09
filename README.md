@@ -1,6 +1,6 @@
 # Heading to Alias Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+This is a plugin for Obsidian (https://obsidian.md).
 
 This plugin lets you automatically add headings (`# Heading`)  from a file to it's YAML Frontmatter under the 'aliases' category. This allows the file to be found by searching for the heading, and for the heading to appear when using [internal links](https://help.obsidian.md/links). 
 
