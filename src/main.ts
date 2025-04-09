@@ -19,12 +19,16 @@ interface MyPluginSettings {
 	ignoredHeadingInput: string;
 	ignoredHeadings: string[];
 	maxHeadingLevel: number;
+	addLowerDuplicate: boolean;
+	addAsWritten: boolean;
 }
 
 const DEFAULT_SETTINGS: MyPluginSettings = {
 	ignoredHeadingInput: "",
 	ignoredHeadings: [],
 	maxHeadingLevel: 1,
+	addLowerDuplicate: false,
+	addAsWritten: true,
 }
 
 export default class HeadingAliasesPlugin extends Plugin {

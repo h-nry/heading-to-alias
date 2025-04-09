@@ -26,24 +26,46 @@ export class SettingsTab extends PluginSettingTab {
         const title = containerEl.createEl("h2", { text: "Heading to Alias Plugin Settings" });
         title.style.marginBottom = "16px";
         title.style.marginTop = "16px";
-        title.style.fontWeight = "750";  
+        title.style.fontWeight = "750";
 
         new Setting(containerEl)
-        .setName("Maximum Heading Depth")
-        .setDesc("The maximum depth of headings (number of \#s) that should be added to alias list")
-        .addDropdown((depth) =>
-            depth
-              .addOption("1", "1")
-              .addOption("2", "2")
-              .addOption("3", "3")
-              .addOption("4", "4")
-              .addOption("5", "5")
-              .addOption("6", "6")
-              .setValue(this.plugin.settings.maxHeadingLevel.toString())
-              .onChange(async (value: string) => {
-                this.plugin.settings.maxHeadingLevel = parseInt(value);
-                await this.plugin.saveSettings();
-              }));
+            .setName("Maximum Heading Depth")
+            .setDesc("The maximum depth of headings (number of \#s) that should be added to alias list")
+            .addDropdown((depth) =>
+                depth
+                    .addOption("1", "1")
+                    .addOption("2", "2")
+                    .addOption("3", "3")
+                    .addOption("4", "4")
+                    .addOption("5", "5")
+                    .addOption("6", "6")
+                    .setValue(this.plugin.settings.maxHeadingLevel.toString())
+                    .onChange(async (value: string) => {
+                        this.plugin.settings.maxHeadingLevel = parseInt(value);
+                        await this.plugin.saveSettings();
+                    }));
+
+        new Setting(containerEl)
+            .setName("Add heading as written")
+            .setDesc("Add headings in the form they are written")
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(this.plugin.settings.addAsWritten)
+                    .onChange(async (value: boolean) => {
+                        this.plugin.settings.addAsWritten = value;
+                        await this.plugin.saveSettings();
+                    }))
+
+        new Setting(containerEl)
+            .setName("Add heading in lower case")
+            .setDesc("Add headings in their lower-case form")
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(this.plugin.settings.addLowerDuplicate)
+                    .onChange(async (value: boolean) => {
+                        this.plugin.settings.addLowerDuplicate = value;
+                        await this.plugin.saveSettings();
+                    }))
 
         new Setting(containerEl)
             .setName('Alias Blacklist')
@@ -67,14 +89,14 @@ export class SettingsTab extends PluginSettingTab {
                         new Notice(`Heading "${this.plugin.settings.ignoredHeadingInput}" added to ignore list!`);
                         this.updateIgnoredHeadings(ignoredHeadingsContainer);
                         (async () => {
-                          await this.plugin.saveSettings();
+                            await this.plugin.saveSettings();
                         })();
                     }
                 });
             })
 
-            const ignoredHeadingsContainer = containerEl.createEl("div", {cls: "heading-to-alias-ignoredHeadingsContainer"})
-            this.updateIgnoredHeadings(ignoredHeadingsContainer);
+        const ignoredHeadingsContainer = containerEl.createEl("div", { cls: "heading-to-alias-ignoredHeadingsContainer" })
+        this.updateIgnoredHeadings(ignoredHeadingsContainer);
     }
 
     updateIgnoredHeadings(container: HTMLDivElement): void {
@@ -83,7 +105,7 @@ export class SettingsTab extends PluginSettingTab {
         this.plugin.settings.ignoredHeadings.forEach(heading => {
             console.log(heading);
 
-            const headingSetting = new Setting(container)
+            new Setting(container)
                 .setClass("heading-to-alias-ignoredHeading")
                 .setName(heading)
                 .addButton((removeButton) => {
@@ -100,7 +122,7 @@ export class SettingsTab extends PluginSettingTab {
 
         (async () => {
             await this.plugin.saveSettings();
-          })();
+        })();
 
     }
 }
