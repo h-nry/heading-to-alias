@@ -1,8 +1,22 @@
-/*
+.heading-to-alias-ignoredHeading {
+    font-weight: var(--font-ui-small) !important;
+    margin: 4px !important;
+    padding: 6px !important;
+    border-style: none !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    height: 24px !important;
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.heading-to-alias-ignoredHeading *> button {
+    padding: 2px 4px 2px 4px;
+}
 
-If your plugin does not need CSS, delete this file.
+.heading-to-alias-ignoredHeading *> svg {
+    height: 16px !important;
+    width: 16px !important;
+}
 
-*/
+.heading-to-alias-ignoredHeadingsContainer {
+    display: grid;
+}
