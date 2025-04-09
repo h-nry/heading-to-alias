@@ -69,11 +69,11 @@ export class SettingsTab extends PluginSettingTab {
 
         new Setting(containerEl)
             .setName('Alias Blacklist')
-            .setDesc('Common headings that shouldn\'t be added to alias lists')
+            .setDesc('Common headings that shouldn\'t be added to alias lists. All various capitalisations will be ignored.')
             .addText(text => text
                 .setPlaceholder('e.g. Examples, Summary')
                 .onChange(async (value) => {
-                    this.plugin.settings.ignoredHeadingInput = value;
+                    this.plugin.settings.ignoredHeadingInput = value.toLowerCase();
                     await this.plugin.saveSettings();
                 }))
             .addButton((button) => {
