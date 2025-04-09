@@ -1,9 +1,9 @@
 {
 	"id": "heading-to-alias",
 	"name": "Heading Aliases",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"minAppVersion": "0.15.0",
 	"description": "Converts headings in a document to YAML Frontmatter aliases",
-	"author": "HNRY",
+	"author": "H-NRY",
 	"isDesktopOnly": false
 }
