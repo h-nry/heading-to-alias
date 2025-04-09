@@ -9,4 +9,4 @@ The plugin allows this functionality to be customised in the following ways:
 - Exclude certain commonly used headings *e.g. Summary, Examples*
 
 ## How to install the plugin
-To install, head to the [plugin releases](https://github.com/h-nry/heading-to-alias/releases/) and download `main.js`, `styles.css` and `manifest.json` from the latest release. Copy these files into the folder in your vault `VaultFolder/.obsidian/plugins/heading-to-alias/`.
+To install, head to the [plugin releases](https://github.com/h-nry/heading-to-alias-obsidian/releases/) and download `main.js`, `styles.css` and `manifest.json` from the latest release. Copy these files into the folder in your vault `VaultFolder/.obsidian/plugins/heading-to-alias/`.
