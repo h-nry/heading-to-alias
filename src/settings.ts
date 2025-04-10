@@ -4,7 +4,8 @@ import {
     View,
     Setting,
     App,
-    Notice
+    Notice,
+    TextComponent
 } from 'obsidian';
 
 import HeadingAliasesPlugin from './main'
@@ -19,6 +20,7 @@ export class SettingsTab extends PluginSettingTab {
     }
 
     display(): void {
+        let ignoredField: TextComponent;
         const { containerEl } = this;
 
         containerEl.empty();
@@ -70,12 +72,15 @@ export class SettingsTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName('Alias Blacklist')
             .setDesc('Common headings that shouldn\'t be added to alias lists. All various capitalisations will be ignored.')
-            .addText(text => text
-                .setPlaceholder('e.g. Examples, Summary')
-                .onChange(async (value) => {
+            .addText(text => {
+                ignoredField = text;
+                text.setPlaceholder('e.g. Examples, Summary')
+                text.onChange(async (value) => {
                     this.plugin.settings.ignoredHeadingInput = value.toLowerCase();
                     await this.plugin.saveSettings();
-                }))
+                })
+            })
+
             .addButton((button) => {
                 button.setTooltip("Add to ignore list");
                 button.setButtonText("Add");
@@ -84,10 +89,18 @@ export class SettingsTab extends PluginSettingTab {
                         new Notice("Heading already ignored.", 2000)
                     }
                     else {
+                        // Push ignored headings to list
                         this.plugin.settings.ignoredHeadings.push(this.plugin.settings.ignoredHeadingInput);
-                        console.log(this.plugin.settings.ignoredHeadings);
+
+                        // Reset field to placeholder
+                        ignoredField.setValue('');
+                        
+                        // Post notice
                         new Notice(`Heading "${this.plugin.settings.ignoredHeadingInput}" added to ignore list!`);
-                        this.updateIgnoredHeadings(ignoredHeadingsContainer);
+                        
+                        this.updateIgnoredHeadingsUI(ignoredHeadingsContainer);
+                        this.plugin.settings.ignoredHeadingInput = '';
+
                         (async () => {
                             await this.plugin.saveSettings();
                         })();
@@ -96,10 +109,10 @@ export class SettingsTab extends PluginSettingTab {
             })
 
         const ignoredHeadingsContainer = containerEl.createEl("div", { cls: "heading-to-alias-ignoredHeadingsContainer" })
-        this.updateIgnoredHeadings(ignoredHeadingsContainer);
+        this.updateIgnoredHeadingsUI(ignoredHeadingsContainer);
     }
 
-    updateIgnoredHeadings(container: HTMLDivElement): void {
+    updateIgnoredHeadingsUI(container: HTMLDivElement): void {
         container.empty();
 
         this.plugin.settings.ignoredHeadings.forEach(heading => {
@@ -114,7 +127,7 @@ export class SettingsTab extends PluginSettingTab {
                     removeButton.onClick(async () => {
                         this.plugin.settings.ignoredHeadings.remove(heading);
                         new Notice(`Removed ignore rule for "${heading}"`);
-                        this.updateIgnoredHeadings(container);
+                        this.updateIgnoredHeadingsUI(container);
                         await this.plugin.saveSettings();
                     })
                 })
