@@ -73,7 +73,7 @@ export default class HeadingAliasesPlugin extends Plugin {
 
 		this.app.fileManager.processFrontMatter(currentFile, (frontmatter) => {
 
-			if (frontmatter['aliases'] == undefined) {frontmatter['aliases'] = ""}
+			if (frontmatter['aliases'] == undefined) {frontmatter['aliases'] = []}
 
 			// Get length of alias list
 			const aliasCount = frontmatter['aliases'].length;
